@@ -13,18 +13,21 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "department")
+@Table(name = "question")
 @NoArgsConstructor
 @Data
-public class Department {
-
+public class Question {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     @NotNull
-    private String name;
+    private String title;
     @NotNull
     private String description;
+    @NotNull
+    private String answerHTML;
+    @NotNull
+    private byte level;
     @NotNull
     private String image;
     @NotNull
@@ -33,7 +36,7 @@ public class Department {
     private long dateUpdate;
     @NotNull
     private byte status;
-    @OneToMany
-    private Set<Category> categories;
-
+    @ManyToOne(optional=false)
+    @JoinColumn(referencedColumnName="id", insertable=false, updatable=false)
+    private Department department;
 }

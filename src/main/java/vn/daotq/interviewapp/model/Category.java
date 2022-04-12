@@ -11,29 +11,32 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
+@Table(name = "categories")
+@Data
 @Getter
 @Setter
-@Table(name = "department")
-@NoArgsConstructor
-@Data
-public class Department {
-
+public class Category {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String name;
     @NotNull
-    private String description;
-    @NotNull
     private String image;
     @NotNull
     private long dateCreate;
     @NotNull
     private long dateUpdate;
+
     @NotNull
     private byte status;
-    @OneToMany
-    private Set<Category> categories;
 
+    @ManyToOne(optional=false)
+    @JoinColumn(referencedColumnName="id", insertable=false, updatable=false) //cart_id chính là trường khoá phụ trong table Item liên kết với khóa chính trong table Cart
+    private Department department;
+
+    @OneToMany
+    private Set<Question> questions;
 }
+
